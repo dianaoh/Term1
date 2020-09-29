@@ -41,7 +41,7 @@ public class MathClass {
 	}
 	public void roundToNearestWhole (double x)
 	{
-		System.out.println(Math.round(x));
+		System.out.println((int)(x+0.5));
 	}
 	
 	public static void main(String args[]) {
