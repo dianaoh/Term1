@@ -9,7 +9,14 @@ public class Clock {
 	
 	public void tick ()
 	{
-		time+=1;
+		if (time<=59)
+		{
+			time+=1;
+		}
+		else
+		{
+			time=0;
+		}
 	}
 	
 	public void displayTime ()
@@ -37,3 +44,4 @@ public class Clock {
 		tester.displayTime();
 	}
 }
+
