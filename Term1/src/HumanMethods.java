@@ -55,7 +55,8 @@ public class HumanMethods {
 		}
 	}
 	
-	public void teammates (int a1, int g1) { //Challenge
+	//Challenge Question
+	public void teammates (int a1, int g1) { 
 		if((a1-age<-2 || a1-age<2) && g1==gender) {
 			System.out.println("teammates");
 		}
