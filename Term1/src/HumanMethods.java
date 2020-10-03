@@ -1,15 +1,16 @@
-import java.util.*;
 public class HumanMethods {
 	private int age;
 	private char gender;
 	
 	public void setAge (int num)
 	{
+		//this.age = age;
 		age = num;
 	}
 	
 	public void setGender (char l)
 	{
+		//this.gender = gender
 		gender = l;
 	}
 	
@@ -48,7 +49,7 @@ public class HumanMethods {
 	}
 		
 	public void teen () {
-		if (age>12 && age<18)
+		if (age>=12 && age<=18)
 		{
 			System.out.println("teenager");
 		}
