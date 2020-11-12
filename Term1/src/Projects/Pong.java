@@ -1,6 +1,8 @@
+//Diana Oh
 package Projects;
-//https://stackoverflow.com/questions/18483768/draw-text-in-middle-of-the-screen
-
+//Citations: https://stackoverflow.com/questions/18483768/draw-text-in-middle-of-the-screen
+//Mr. Friedman helped me with drawing strings, and helped me figure out how to use the booleans 
+//to make my code work
 //filler code for pong provided by Mr. David
 
 import java.awt.BorderLayout;
@@ -27,7 +29,7 @@ public class Pong extends JPanel implements KeyListener {
 	private final int SLOWER_DIAM=15;
 	
 	private  int slower_speed=5;
-	private int paddle_speed1=3, paddle_speed2=3;
+	private int paddle_speed1=4, paddle_speed2=4;
 	private int x= WIDTH/2+3, y= HEIGHT/2-10, speedX= 0, speedY = 0;
 	private int paddle1 = WIDTH/2-PADDLE_WIDTH/2, paddle2= WIDTH/2-PADDLE_WIDTH/2;
 	private int score1, score2;
@@ -38,11 +40,12 @@ public class Pong extends JPanel implements KeyListener {
 	
 	// your instance variables here, I've given you a few 
 	private boolean up1, down1, up2, down2; 		// booleans to keep track of paddle movement
-	private boolean solo1 = false, solo2=false;
-	private boolean round =false;
-	private boolean restart=false;
-	private boolean slower1=false, slower2=false;
-	private boolean starter=true;
+	private boolean solo1 = false, solo2=false;		//booleans to keep track of solo modes
+	private boolean round =false;					//boolean to keep track of new rounds
+	private boolean restart=false;					//boolean to restart
+	private boolean slower1=false, slower2=false;	//boolean to keep track of slower balls
+	private boolean starter=true; 					//boolean to use for the starter
+	private boolean solo=false;						//boolean to keep track if the mode is solo or not
 	
 	
 	// this method moves the ball at each timestep
@@ -72,7 +75,46 @@ public class Pong extends JPanel implements KeyListener {
 		if (down2 ==true) {
 			paddle2 -= paddle_speed2;
 		}
+		
+		//AI paddles during solo mode
+		if (solo==true) {
+			
+			//AI paddle for solo mode1
+			if (solo1==true) {
+				if (y>paddle2+PADDLE_HEIGHT/2) {
+					up2=true;
+					down2=false;
+						
+				}
+				else if (y<paddle2+PADDLE_HEIGHT/2) {
+					down2=true;
+					up2=false;
+					
+				}
+				else {
+					down2=false;
+					up2=false;	
+				}
+			}
+			
+			//AI paddle for solo mode2
+			if (solo2==true) {
+				if (y>paddle1+PADDLE_HEIGHT/2) {
+					up1=true;
+					down1=false;
+		
+				}
+				else if (y<paddle1+PADDLE_HEIGHT/2) {
+					down1=true;
+					up1=false;
 	
+				}
+				else {
+					down1=false;
+					up1=false;
+				}
+			}
+		}
 		
 	}
 	
@@ -94,14 +136,14 @@ public class Pong extends JPanel implements KeyListener {
 		if (x>=WIDTH-DIAM) {
 			score1++;
 			slower_speed=2;
-			newRound ();
+			new_round ();
 			
 		}
 		
 		else if (x<=0) {
 			score2++;
 			slower_speed=2;
-			newRound ();
+			new_round ();
 		}
 		
 		if (y>= HEIGHT-DIAM|| y<=0) {
@@ -109,36 +151,19 @@ public class Pong extends JPanel implements KeyListener {
 	
 		}
 		
+		//ball speed determination
 		if (x<=PADDLE_WIDTH && y>=paddle1 && y<= paddle1+PADDLE_HEIGHT) {
-			speedX = -speedX;
-			speedY = -speedY;
+			speedX=(3 + (int)(Math.random()*(3)));
+			speedY=(3 + (int)(Math.random()*(3)));
 		}
 		
 		if (x>=WIDTH-PADDLE_WIDTH-DIAM && y>= paddle2 && y<= paddle2+PADDLE_HEIGHT) {
-			speedX=-speedX;
-			speedY=-speedY;
+			speedX=-(3 + (int)(Math.random()*(3)));
+			speedY=-(3 + (int)(Math.random()*(3)));
 		}
 		
-		if (paddle1<0 && solo1==true) {
-			up1=true;
-			down1=false;
-		}
 		
-		if (paddle1+PADDLE_HEIGHT>=HEIGHT && solo1==true) {
-			down1=true;
-			up1=false;
-		}
-		
-		if (paddle2<0 && solo2==true) {
-			up2=true;
-			down2=false;
-		}
-		
-		if (paddle2+PADDLE_HEIGHT>=HEIGHT && solo2==true) {
-			down2=true;
-			up2=false;
-		}
-		
+		//slowball collisions
 		if (slower_position2<=PADDLE_WIDTH && slower_positionx2>=paddle1 && slower_positionx2<= paddle1+PADDLE_HEIGHT) {
 			paddle_speed1=1;
 		}
@@ -146,6 +171,8 @@ public class Pong extends JPanel implements KeyListener {
 		if (slower_position1>=WIDTH-PADDLE_WIDTH-DIAM && slower_positionx1>= paddle2 && slower_positionx1<= paddle2+PADDLE_HEIGHT) {
 			paddle_speed2=1;
 		}
+
+
 		
 		
 	}
@@ -181,7 +208,7 @@ public class Pong extends JPanel implements KeyListener {
 		g.setColor(new Color (255,255,255));
 		g.fillRect (WIDTH-PADDLE_WIDTH, paddle2 ,PADDLE_WIDTH, PADDLE_HEIGHT);
 		
-		//Balls to make the other paddle slower
+		//Slowballs to make the other paddle slower
 		g.setColor(new Color (255,255,255));
 		int slower_positionx1= paddle1+PADDLE_HEIGHT/2-SLOWER_DIAM/2;
 		g.fillOval(slower_position1,slower_positionx1,SLOWER_DIAM,SLOWER_DIAM);
@@ -191,7 +218,6 @@ public class Pong extends JPanel implements KeyListener {
 		g.fillOval(slower_position2,slower_positionx2,SLOWER_DIAM,SLOWER_DIAM);
 		
 		// writes the score of the game - you just need to fill the scores in
-		
 		Font f = new Font("Arial", Font.BOLD, 14);
 		g.setFont(f);
 		g.setColor(Color.white);
@@ -199,7 +225,7 @@ public class Pong extends JPanel implements KeyListener {
 		g.drawString("P2 Score: "+score2, WIDTH*3/5, 20);
 		FontMetrics fontMetrics = g.getFontMetrics(f);
 		
-		//New Round
+		//Continues to New Round 
 		if (round==true) {
 			slower_speed=0;
 			String sentance= "Press c to continue";
@@ -207,7 +233,7 @@ public class Pong extends JPanel implements KeyListener {
 			g.drawString(sentance, WIDTH/2-size/2, HEIGHT/2);
 		}
 		
-		//Restart
+		//Notification before restarting the game
 		if (restart==true) {
 			round=false;
 			String sentance= "Would you really like to restart? (y/n)";
@@ -217,7 +243,7 @@ public class Pong extends JPanel implements KeyListener {
 			g.drawString(sentance, WIDTH/2-size/2, HEIGHT/2);
 		}
 		
-		//Solo Rounds
+		//Displays Solo Rounds 1 & 2
 		if (solo1==true) {
 			String sentance= "Solo1 Mode";
 			int size = fontMetrics.stringWidth(sentance);
@@ -255,10 +281,10 @@ public class Pong extends JPanel implements KeyListener {
 			restart=true;
 		}
 		
-		if (e.getKeyChar()=='d') {
+		if (e.getKeyChar()=='d' && starter==true) {
 			starter=false;
-			speedX=3;
-			speedY=4;
+			speedX=(3 + (int)(Math.random()*(3)));;
+			speedY=(3 + (int)(Math.random()*(3)));;
 		}
 		
 		//slowball shooting
@@ -273,6 +299,7 @@ public class Pong extends JPanel implements KeyListener {
 		
 		// turn 1-player mode on
 		if (e.getKeyChar() == '1') {
+			solo=true;
 			solo1 = true;
 			solo2=false;
 			solo();
@@ -281,36 +308,31 @@ public class Pong extends JPanel implements KeyListener {
 			
 		// turn 2-player mode on
 		if (e.getKeyChar() == '2') {
+			solo=true;
 			solo2= true;
 			solo1=false;
 			solo ();
 			
 		}
 			
-		if (e.getKeyChar()=='c') {
-			if (solo1==true) {
-				down1=true;
-			}
-			else if (solo2==true) {
-				up2=true;
-			}
-			
-			speedX=3;
-			speedY=4;
+		if (e.getKeyChar()=='c'&& round==true) {
+			solo=true;
+			speedX=(3 + (int)(Math.random()*(3)));;
+			speedY=(3 + (int)(Math.random()*(3)));;
 			round=false;
 		}
 		
 		if (e.getKeyChar()=='n') {
 			restart=false;
-			speedX=3;
-			speedY=4;
+			speedX=(3 + (int)(Math.random()*(3)));;
+			speedY=(3 + (int)(Math.random()*(3)));;
 		}
 		
 		if (e.getKeyChar()=='y') {
 			restart ();
 			restart=false;
-			speedX=3;
-			speedY=4;
+			speedX=(3 + (int)(Math.random()*(3)));;
+			speedY=(3 + (int)(Math.random()*(3)));;
 		}
 		
 		
@@ -343,8 +365,11 @@ public class Pong extends JPanel implements KeyListener {
 	public void restart() {
 		slower_position1=0;
 		slower_position2=WIDTH-SLOWER_DIAM;
-		paddle_speed1=3;
-		paddle_speed2=3;
+		paddle_speed1=4;
+		paddle_speed2=4;
+		solo1=false;
+		solo2=false;
+		solo=false;
 		score1=0;
 		score2=0;
 		speedX=0;
@@ -355,11 +380,13 @@ public class Pong extends JPanel implements KeyListener {
 		paddle2=WIDTH/2-PADDLE_HEIGHT/2;
 	}
 	
-	public void newRound () {
+	//new round when a person scores
+	public void new_round () {
 		slower_position1=0;
 		slower_position2=WIDTH-SLOWER_DIAM;
-		paddle_speed1=3;
-		paddle_speed2=3;
+		paddle_speed1=4;
+		paddle_speed2=4;
+		solo=false;
 		round=true;
 		up1=false;
 		up2=false;
@@ -374,27 +401,18 @@ public class Pong extends JPanel implements KeyListener {
 		paddle2=WIDTH/2-PADDLE_HEIGHT/2;
 		
 	}
-	
+	//resetting for solo rounds 1&2
 	public void solo () {
 		slower_speed=0;
 		round=false;
 		restart=false;
 		score1=0;
 		score2=0;
-		speedX=3;
-		speedY=4;
-		if (solo1==true) {
-			solo2=false;
-			up1=true;
-			
-		}
-		else if (solo2==true) {
-			solo1=false;
-			up2=true;
-			
-		}
+		speedX=3;;
+		speedY=4;;
+	
 	}
-
+	
 	//////////////////////////////////////
 	//////////////////////////////////////
 	
