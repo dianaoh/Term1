@@ -10,10 +10,11 @@ public class WarmUp {
 	}
 	
 	public void digit(int x) {
-		while (x>=1) {
-			System.out.println(x%10);
+		while (x>1) {
+			System.out.print((x%10)+" ");
 			x= (int)x/10;
 		}
+		System.out.println();
 	}
 	
 	public void factors (int n) {
