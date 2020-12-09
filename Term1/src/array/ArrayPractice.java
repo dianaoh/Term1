@@ -104,29 +104,36 @@ public class ArrayPractice {
 				}
 			}
 		}
-		int count2= 0;
-		int [] simplified = new int [arr.length];
+		
+		int [] simplified1 = new int [arr.length];
 		for (int i=0;i<arr.length;i++) {
 			boolean isNotDuplicate = true; 
 			for (int j=i+1;j<arr.length;j++) {
 				if (arr [i]== arr[j]) {
 					isNotDuplicate=false;
-					count2++;
 				}
 			}
 			if (isNotDuplicate) {
-				simplified[i]=arr[i];
+				simplified1[i]=arr[i];
+			}
+		}
+		int count2=0;
+		int [] simplified2 = new int [arr.length-count];
+		for (int j=0;j<arr.length;j++) {
+			if (simplified1[j]!=0) {
+				simplified2 [count2]=simplified1[j];
+				count2++;
 			}
 		}
 
-		display (simplified);
+		display (simplified2);
 	}
 	public static void main(String []args) {
 		ArrayPractice a = new ArrayPractice();
 		double []arr= {1.0,2.0,3.0,4.0};
 		int [] arr1= {-1,2,-3,-2,1};
 		int [] arr2 = {2,1,9,-1};
-		int [] arr3= {5,3,6,5,3,4,5,7,2,3};
+		int [] arr3= {5,3,5,7,2,3};
 		char [] arr4= {'a','b','c','d'};
 		//a.average(arr);
 		//a.posNeg(arr1);
