@@ -1,6 +1,22 @@
 package array;
 
 public class ArrayReview {
+	//Easy1
+	public void printString (String []arr) {
+		for (int i=0;i<arr.length;i++) {
+			System.out.print(arr[i]+ " ");
+		}
+		System.out.println();
+	}
+	
+	//Easy2
+	public void toN (int n) {
+		int [] arr= new int [n];
+		for (int i=0;i<arr.length;i++) {
+			arr[i]=i+1;
+		}
+		print (arr);
+	}
 	
 	//Easy3
 	public void average (int arr[]) {
@@ -9,6 +25,13 @@ public class ArrayReview {
 			sum= sum + arr[i];
 		}
 		System.out.println(sum/arr.length);
+	}
+	
+	public void doubles (int [] arr) {
+		for (int i=0;i<arr.length;i++) {
+			arr[i]*=2;
+		}
+		print (arr);
 	}
 	
 	//Medium1
@@ -114,6 +137,7 @@ public class ArrayReview {
 	
 	public static void main (String args[]) {
 		ArrayReview a = new ArrayReview ();
+		String []arrS= {"Hi","Hello","Greetings"};
 		int []arr = {4,2,6};
 		int []arr2= {8, 3, 12, 5, 15, 45};
 		int []arr3= {4, 6, 2, 12};
@@ -121,12 +145,16 @@ public class ArrayReview {
 		int []arr5 = {8, 4, 7};
 		int []arr6 = {8, 4, 9, 0, 2};
 		int []arr7= {7, 2, 3, 9, 6};
+	
+		//a.printString(arrS);
+		//a.toN(3);
 		//a.average(arr);
+		//a.doubles(arr);
 		//a.takeaway(arr);
 		//a.fibonacci(7);
 		//a.divisible(arr2);
 		//a.specialAverage(arr3);
 		//a.dotProduct(arr4, arr5);
-		//a.duplicates(arr6, arr7);
+		a.duplicates(arr6, arr7);
 	}
 }
