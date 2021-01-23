@@ -38,10 +38,11 @@ public class AngryBirds extends JPanel{
 	//Size of Enemies
 	private int[] enemySize= {40,40,40,40,40,40,40};
 	
-	//Positions and speed of shrinking poison
+	//Positions,speed of shrinking poison and reset position of poison
 	private int[] poisonX= new int[enemyX.length-1];
 	private int[] poisonY= {-600,-300,-800,-100,-400,-700};
 	private int poisonSpeed=1;
+	private int poisonYreset=-400;
 	
 	//Boolean to keep track if enemy is dead or not
 	private boolean[] dead = {false,false,false,false,false,false,false};
@@ -67,6 +68,10 @@ public class AngryBirds extends JPanel{
 	private double rockXOriginal=73, rockYOriginal=440;
 	private double crowSpeed=5.5;
 	
+	//Crow shrinking rate, and number of points that crow has
+	private double crowShrink=1.1;
+	private int crowPoints=5;
+	
 	//Score of player
 	private int score=0;
 	
@@ -81,9 +86,8 @@ public class AngryBirds extends JPanel{
 	private boolean gameOver=false;
 	private boolean gameWin=false;
 	
-	//Sizes of rock and Enemy
+	//Sizes of rock and Poison
 	private final int ROCKDIAM=25, ENEMYDIAM=40;
-	private final int ENEMY_SIZE=40;
 	private final int POTION_HEIGHT=27, POTION_WIDTH=15;
 	
 	
@@ -235,7 +239,7 @@ public class AngryBirds extends JPanel{
 				
 				//resets position of potion
 				if (poisonY[i]>W_HEIGHT) {
-					poisonY[i]=-400;
+					poisonY[i]=poisonYreset;
 				}
 			}
 		}
@@ -255,9 +259,9 @@ public class AngryBirds extends JPanel{
 					
 					//increases score of player
 					if (i==6) {
-						score+=5;
+						score+=crowPoints;
 					}
-					else score+=1;
+					else score++;
 				}
 			}
 			
@@ -273,7 +277,7 @@ public class AngryBirds extends JPanel{
 				
 				//if there is a collision between crow and potion, crow size shrinks by 2
 				if (distance(enemyX[6],enemyY[6],poisonX[i],poisonY[i])<=enemySize[6]/2+POTION_WIDTH/2) {
-					enemySize[6]/=1.1;
+					enemySize[6]/=crowShrink;
 				}
 			}
 			

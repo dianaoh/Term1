@@ -41,8 +41,6 @@ public class ImportantArray {
 			}
 		}
 	}
-	
-	public void 
 	public static void miain (String [] args) {
 		ImportantArray a = new ImportantArray ();
 		
