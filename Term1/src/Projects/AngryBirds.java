@@ -4,7 +4,6 @@ package Projects;
 // https://stackoverflow.com/questions/14160374/how-to-insert-an-animated-gif-in-java (for crow gif)
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
