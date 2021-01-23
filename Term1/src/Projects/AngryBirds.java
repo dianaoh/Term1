@@ -1,4 +1,3 @@
-
 package Projects;
 // Angry Birds template provided by Mr. David
 // Help with increasing score with Mr. Friedman
@@ -33,20 +32,23 @@ public class AngryBirds extends JPanel{
 	private final double GRAVITY2 = 8;
 
 	//Arrays:
-	//Positions of enemies
+	//X and YPositions of enemies
 	private int[] enemyX= {235,780,370,469,527,642,860};
 	private int[] enemyY= {468,438,245,360,195,360,50};
+	
+	//Positions and speed of shrinking poison
 	private int[] poisonX= {241,786,376,475,534,647};
 	private int[] poisonY= {-600,-300,-800,-100,-400,-700};
-	private int[] poisonSpeed= new int [poisonX.length];
+	private int poisonSpeed=1;
 	
+	//Size of Enemies
 	private int[] enemySize= {40,40,40,40,40,40,40};
 	
-	//Dead or not
+	//Boolean to keep track if enemy is dead or not
 	private boolean[] dead = {false,false,false,false,false,false,false};
 
 	
-	//Images of Rock, slingshot, and enemies
+	//Images of Rock, slingshot, enemies and poison
 	private Image rock;
 	private Image slingshot;
 	private Image landscape;
@@ -56,18 +58,18 @@ public class AngryBirds extends JPanel{
 	private Image monster4;
 	private Image monster5;
 	private Image monster6;
-	private Image crow2;
+	private Image crow;
 	private Image potion;
 
-	//Starting positions and speeds of rock
+	//Starting positions and speeds of rock, and speed of crow
 	private int startX, startY;
 	private double speedX=0, speedY=0; 
 	private double rockX=73, rockY=440; 
+	private double rockXOriginal=73, rockYOriginal=440;
 	private double crowSpeed=5.5;
 	
 	//Score of player
 	private int score=0;
-	
 	
 	//Number of tries used
 	private int triesLeft=20;
@@ -76,6 +78,7 @@ public class AngryBirds extends JPanel{
 	//Gravitational pull boolean
 	private boolean isGravityOn = false; 
 	
+	//Boolean to check if Player lost or won game
 	private boolean gameOver=false;
 	private boolean gameWin=false;
 	
@@ -93,69 +96,78 @@ public class AngryBirds extends JPanel{
 	
 	
 	// this method is for setting up any arrays that need filling in and loading images. 
-	// This method will run once at the start of the game.
 	public void setup() {
-
-		// example of loading an image file - edit to suit your project
+		
+		//Image of rock to kill enemies
 		try {
 			rock = ImageIO.read(new File("rock.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
-		//slingshot
+		//Image of slingshot
 		try {
 			slingshot= ImageIO.read(new File("catapult.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		//landscape code
+		//Image of landscape
 		try {
 			landscape= ImageIO.read(new File("landscape3.png"));
 		}	catch (IOException e) {
 			e.printStackTrace();
 		}
 		
-		//Monsters Image reading
+		//Image of Monster1
 		try {
 			monster1= ImageIO.read(new File("big-mouth-monster.png"));
 		}	catch (IOException e) {
 			e.printStackTrace();
 		}
 		
+		//Image of Monster2
 		try {
 			monster2= ImageIO.read(new File("round_monster.png"));
 		}	catch (IOException e) {
 			e.printStackTrace();
 		}
 		
+		//Image of Monster3
 		try {
 			monster3= ImageIO.read(new File("scary-monster.png"));
 		}	catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		//Image of Monster4
 		try {
 			monster4= ImageIO.read(new File("bird-monster-pngrepo-com (1).png"));
 		}	catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		//Image of Monster5
 		try {
 			monster5= ImageIO.read(new File("three-eyed-monster.png"));
 		}	catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		//Image of Monster6
 		try {
 			monster6= ImageIO.read(new File("square-big-mouth-monster.png"));
 		}	catch (IOException e) {
 			e.printStackTrace();
 		}
 		
+		//Image of Crow
 		try {
-			crow2= ImageIO.read(new File ("crow2.png"));
+			crow= ImageIO.read(new File ("crow2.png"));
 		}	catch (IOException e) {
 			e.printStackTrace();
 		}
 		
+		//Image of Potion
 		try {
 			potion= ImageIO.read(new File ("Potion.png"));
 		}	catch (IOException e) {
@@ -167,12 +179,16 @@ public class AngryBirds extends JPanel{
 		
 	}
 	
-	// move your 'bird' and apply any gravitational pull 
+	// moves 'rock' and applies gravitational pull 
 	public void moveRock() {
+		//if statement to see if the game is on going or ended
 		if (gameOver==false && gameWin==false) {
+			
+			//acceleration of rock
 			rockX += speedX; 
 			rockY += speedY; 
 			
+			//Gravitational pull on rock
 			if (isGravityOn) {
 				speedY+= GRAVITY1;
 			}
@@ -180,52 +196,60 @@ public class AngryBirds extends JPanel{
 			//resets bird position when off the screen
 			//turns gravity and speed back to zero
 			if (rockX>W_WIDTH || rockY>W_HEIGHT) {
-				rockX=73;
-				rockY=440;
+				rockX=rockXOriginal;
+				rockY=rockYOriginal;
 				speedX=0;
 				speedY=0;
 				isGravityOn=false;
+				//reduces the number of tries left
 				triesLeft--;
 			}
 			
 		}
 	}
-	//Moves the 'Crow' and makes it fly, also checks when it reaches the wall
+	//Moves the 'Crow' and makes it fly
 	public void moveCrow() {
+		//if statement to see if the game is on going or ended
 		if (gameOver==false && gameWin==false) {
+			//moves crow across the screen
 			enemyX[6]-=crowSpeed;
 			
+			//Checks for Collsions and resets position of crow
 			if (enemyX[6]+ENEMYDIAM<0) {
 				enemyX[6]=W_WIDTH+ENEMYDIAM*4;
 			}
 		}
 	}
 	
+	//Method to drop Shrinking poisons/potions
 	public void dropPotion() {
+		//if statement to see if the game is on going or ended
 		if (gameOver==false && gameWin==false) {
+			//makes the potion fall down the screen
 			for (int i=0;i<poisonY.length;i++) {
-				poisonSpeed[i]=(int)(Math.random ()+1);
-			}
-			for (int i=0;i<poisonY.length;i++) {
-				poisonY[i]+=poisonSpeed[i];
+				poisonY[i]+=poisonSpeed;
+				
+				//resets position of potion
 				if (poisonY[i]>W_HEIGHT) {
 					poisonY[i]=-400;
-					poisonSpeed[i]=(int)(Math.random ()+1);
 				}
 			}
 		}
 	}
 	
-	// check for any collisions between your 'bird' and the enemies.
+	// check for any collisions between your 'rock' and the enemies.
 	// if there is a collision, address it
 	public void checkHits() {
+		//if statement to see if the game is on going or ended
 		if (gameOver==false && gameWin==false) {
-			//finding out if there is a collision or not
+			//finding out if there is a collision between rock and enemies
 			for (int i=0;i<enemyX.length;i++) {
 				if (distance(enemyX[i],enemyY[i],rockX,rockY)<=enemySize[i]/2+ROCKDIAM/2 && dead[i]==false) {
+					//cast enemies as dead
 					dead[i]=true;
 					deadcount++;
 					
+					//increases score of player
 					if (i==6) {
 						score+=5;
 					}
@@ -233,8 +257,10 @@ public class AngryBirds extends JPanel{
 				}
 			}
 			
+			//finding out if there is a collision between poison and enemies
 			for (int i=0;i<poisonX.length;i++) {
 				if (poisonY[i]==enemyY[i]){
+					//shrinks size by 2
 					enemySize[i]/=2;
 				}
 			}
@@ -259,7 +285,9 @@ public class AngryBirds extends JPanel{
 	// what you want to happen at the moment when the 
 	// mouse is first pressed down.
 	public void mousePressed(int mouseX, int mouseY) {
+		//if statement to see if the game is on going or ended
 		if (gameOver==false && gameWin==false) {
+			//the starting position is cast as the click of the player
 			startX = mouseX;
 			startY = mouseY; 
 		}
@@ -267,6 +295,7 @@ public class AngryBirds extends JPanel{
 	
 	// what you want to happen when the mouse button is released
 	public void mouseReleased(int mouseX, int mouseY) {
+		//if statement to see if the game is on going or ended
 		if (gameOver==false && gameWin==false) {
 			//distance between starting point and after point
 			int distDraggedX= mouseX - startX;
@@ -281,16 +310,20 @@ public class AngryBirds extends JPanel{
 
 		}
 	}
+	
+	//Method to calculate if Game has finished with a Loss or a Win
 	public void gameOverWin () {
+		//Game Over is initiated
 		if (triesLeft==0 && deadcount<7) {
 			gameOver=true;
 		}
+		//Game is Won
 		if (triesLeft>0 && deadcount>6) {
 			gameWin=true;
 		}
 	}
 	
-	// draws everything in our project - the enemies, your 'bird', 
+	// draws everything in my project - the enemies, my 'rock', 
 	// and anything else that is present in the game
 	public void paint(Graphics g) {
 		
@@ -304,6 +337,8 @@ public class AngryBirds extends JPanel{
 		g.setFont(a);
 		g.setColor(Color.black);
 		g.drawString("score: "+score, W_WIDTH/6, 20);
+		
+		//displayes tries left on screen
 		g.drawString("tries left: "+(triesLeft), W_WIDTH*4/6, 20);
 		
 		// draws image of rock
@@ -319,20 +354,22 @@ public class AngryBirds extends JPanel{
 		g.drawImage(monster4, enemyX[3],enemyY[3], enemySize[3],enemySize[3], null);
 		g.drawImage(monster5, enemyX[4],enemyY[4], enemySize[4],enemySize[4], null);
 		g.drawImage(monster6, enemyX[5],enemyY[5], enemySize[5],enemySize[5], null);
-		g.drawImage(crow2, enemyX[6], enemyY[6],ENEMY_SIZE, ENEMY_SIZE, null);
+		g.drawImage(crow, enemyX[6], enemyY[6],ENEMY_SIZE, ENEMY_SIZE, null);
 		
-		
+		//draws image of poison
 		for (int i=0;i<poisonX.length;i++) {
 			g.drawImage(potion,poisonX[i], poisonY[i], POTION_WIDTH, POTION_HEIGHT, null);
 		}
-
+		
+		//displayes "GAME OVER" or "YOU WIN" depending on if the player wins or loses
 		Font b= new Font ("Arial",Font.BOLD,60);
 		g.setFont(b);
 		g.setColor(Color.black);
+		//Game is lost
 		if (gameOver==true) {
 			g.drawString("GAME OVER", W_WIDTH/3,W_HEIGHT/2);
 		}
-		
+		//Game is won
 		if (gameWin==true) {
 			g.drawString("YOU WIN:))))", W_WIDTH/3,W_HEIGHT/2);
 		}
