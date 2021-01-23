@@ -32,16 +32,16 @@ public class AngryBirds extends JPanel{
 
 	//Arrays:
 	//X and YPositions of enemies
-	private int[] enemyX= {235,780,370,469,527,642,860};
-	private int[] enemyY= {468,438,245,360,195,360,50};
-	
-	//Positions and speed of shrinking poison
-	private int[] poisonX= {241,786,376,475,534,647};
-	private int[] poisonY= {-600,-300,-800,-100,-400,-700};
-	private int poisonSpeed=1;
+	private int[] enemyX= {235,775,370,470,529,642,860};
+	private int[] enemyY= {485,505,250,385,207,365,50};
 	
 	//Size of Enemies
 	private int[] enemySize= {40,40,40,40,40,40,40};
+	
+	//Positions and speed of shrinking poison
+	private int[] poisonX= new int[enemyX.length-1];
+	private int[] poisonY= {-600,-300,-800,-100,-400,-700};
+	private int poisonSpeed=1;
 	
 	//Boolean to keep track if enemy is dead or not
 	private boolean[] dead = {false,false,false,false,false,false,false};
@@ -222,6 +222,11 @@ public class AngryBirds extends JPanel{
 	
 	//Method to drop Shrinking poisons/potions
 	public void dropPotion() {
+		//Setting position of poison X;
+		for (int i=0;i<poisonX.length;i++) {
+			poisonX[i]=enemyX[i]+enemySize[i]/2-POTION_WIDTH/2;
+			
+		}
 		//if statement to see if the game is on going or ended
 		if (gameOver==false && gameWin==false) {
 			//makes the potion fall down the screen
@@ -258,11 +263,21 @@ public class AngryBirds extends JPanel{
 			
 			//finding out if there is a collision between poison and enemies
 			for (int i=0;i<poisonX.length;i++) {
+				//if there is a collision between still enemy and potion shrinks size by 2
 				if (poisonY[i]==enemyY[i]){
 					//shrinks size by 2
 					enemySize[i]/=2;
+					//enemyY[i]+=enemySize[i];
+					enemyX[i]+=enemySize[i]/2;
+				}
+				
+				//if there is a collision between crow and potion, crow size shrinks by 2
+				if (distance(enemyX[6],enemyY[6],poisonX[i],poisonY[i])<=enemySize[6]/2+POTION_WIDTH/2) {
+					enemySize[6]/=1.1;
 				}
 			}
+			
+			
 		
 			//dropping monsters if they are dead
 			for (int i=0;i<dead.length;i++) {
@@ -353,7 +368,8 @@ public class AngryBirds extends JPanel{
 		g.drawImage(monster4, enemyX[3],enemyY[3], enemySize[3],enemySize[3], null);
 		g.drawImage(monster5, enemyX[4],enemyY[4], enemySize[4],enemySize[4], null);
 		g.drawImage(monster6, enemyX[5],enemyY[5], enemySize[5],enemySize[5], null);
-		g.drawImage(crow, enemyX[6], enemyY[6],ENEMY_SIZE, ENEMY_SIZE, null);
+		g.drawImage(crow, enemyX[6], enemyY[6],enemySize[6], enemySize[6], null);
+		
 		
 		//draws image of poison
 		for (int i=0;i<poisonX.length;i++) {

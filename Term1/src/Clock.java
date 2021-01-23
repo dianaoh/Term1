@@ -9,6 +9,7 @@ public class Clock {
 	
 	public void tick ()
 	{
+		//time = (time+1)%60
 		if (time<=59)
 		{
 			time+=1;

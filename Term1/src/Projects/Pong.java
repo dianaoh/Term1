@@ -28,6 +28,7 @@ public class Pong extends JPanel implements KeyListener {
 	private final int PADDLE_WIDTH = 20, DIAM = 8, PADDLE_HEIGHT = 100;
 	private final int SLOWER_DIAM=15;
 	
+	//variables that change as the game proceeds
 	private  int slower_speed=5;
 	private int paddle_speed1=4, paddle_speed2=4;
 	private int x= WIDTH/2+3, y= HEIGHT/2-10, speedX= 0, speedY = 0;

@@ -1,3 +1,4 @@
+package Loops;
 import java.util.*;
 public class WhileLoops {
 	Scanner scanner= new Scanner (System.in);

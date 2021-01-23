@@ -20,7 +20,7 @@ public class StringIntro {
 	}
 	
 	public void contains (String str1, String str2) {
-		if (str1.contains(str2)) {
+		if (str1.indexOf(str2)!=-1) {
 			System.out.println("yes");
 		}
 		else {

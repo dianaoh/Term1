@@ -29,10 +29,10 @@ public class LoopGraphicsFiller extends JPanel {
 		
 		// call your methods here
 		colorRectangle (g);
-		circles(g,13);
-		change_circles (g);
-		row_circles (g);
-		checkboard (g);
+		//circles(g,13);
+		//change_circles (g);
+		//row_circles (g);
+		//checkboard (g);
 	}
 	//Write a method that draws n (a parameter) circles across the screen
 	public void circles(Graphics g,int n) {

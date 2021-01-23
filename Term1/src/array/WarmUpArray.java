@@ -20,7 +20,7 @@ public class WarmUpArray {
 		}
 		System.out.println(a);
 	}
-	
+	//Extra Credit 
 	public void count (char []arr) {
 		int max=Integer.MIN_VALUE;
 		for (int i=0;i<arr.length;i++) {
