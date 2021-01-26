@@ -1,4 +1,4 @@
-package Projects;
+package strings;
 
 public class GroupStringWork {
 	public void pigLatin (String str) {
