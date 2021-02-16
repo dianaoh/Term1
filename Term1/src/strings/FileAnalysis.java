@@ -153,14 +153,6 @@ public class FileAnalysis {
 	
 	// returns the longest word in the file
 	private String longestWord() {
-		String maxWord="";
-		
-		String [] words=wordList();
-		for (int i=0;i<words.length;i++) {
-			if (words[i].length()>maxWord.length()) {
-				maxWord=words[i];
-			}
-		}
 		return null;
 	}
 	
