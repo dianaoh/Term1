@@ -89,53 +89,53 @@ public class EvenMoreWith2dArrays {
 		display (sumColumn);
 	}
 	
-	//Challenge
-	public void sort(int [][]arr) {
-		int position=0;
-		int mini= 0;
-		int minj=0;
-		int minimum=arr[0][0];
-		
-		for (int i=0;i<arr.length;i++) {
-			for (int j=0;j<arr[i].length;j++) {
-				for (int z=0;z;z++) {
-					if (minimum>arr[i][j]) {
-						minimum=arr[i][j];
-						mini=i;
-						minj=j;
-					}
-				}
-			}
-			
-		}
-	}
+//	//Challenge
+//	public void sort(int [][]arr) {
+//		int position=0;
+//		int mini= 0;
+//		int minj=0;
+//		int minimum=arr[0][0];
+//		
+//		for (int i=0;i<arr.length;i++) {
+//			for (int j=0;j<arr[i].length;j++) {
+//				for (int z=0;z;z++) {
+//					if (minimum>arr[i][j]) {
+//						minimum=arr[i][j];
+//						mini=i;
+//						minj=j;
+//					}
+//				}
+//			}
+//			
+//		}
+//	}
 	
-	public void snake (int [][]arr) {
-		boolean sorted=false;
-		int repeated=arr[0][0];
-		while (sorted==false) {
-			for (int i=0;i<arr.length;i++) {
-				if (i%2==0) {
-					for (int j=0;j<arr[i].length;j++) {
-						if (arr[i+1][j]<arr[i][j]) {
-							repeated=arr[i][j];
-							arr[i][j]=arr[i+1][j];
-							arr[i+1][j]=repeated;
-						}
-					}
-				}
-				else {
-					for (int j=arr[i].length-1;j>=0;j--) {
-						if (arr[i][j]<arr[i+1][j]) {
-							repeated=arr[i][j];
-							arr[i][j]=arr[i+1][j];
-							arr[i+1][j]=repeated;
-						}
-					}
-				}
-			}
-		}
-	}
+//	public void snake (int [][]arr) {
+//		boolean sorted=false;
+//		int repeated=arr[0][0];
+//		while (sorted==false) {
+//			for (int i=0;i<arr.length;i++) {
+//				if (i%2==0) {
+//					for (int j=0;j<arr[i].length;j++) {
+//						if (arr[i+1][j]<arr[i][j]) {
+//							repeated=arr[i][j];
+//							arr[i][j]=arr[i+1][j];
+//							arr[i+1][j]=repeated;
+//						}
+//					}
+//				}
+//				else {
+//					for (int j=arr[i].length-1;j>=0;j--) {
+//						if (arr[i][j]<arr[i+1][j]) {
+//							repeated=arr[i][j];
+//							arr[i][j]=arr[i+1][j];
+//							arr[i+1][j]=repeated;
+//						}
+//					}
+//				}
+//			}
+//		}
+//	}
 	
 	public void display(int[]arr) {
 		for (int i=0;i<arr.length;i++) {
@@ -189,6 +189,6 @@ public class EvenMoreWith2dArrays {
 		//a.addZero(arr2);
 		//a.flipRows(arr3);
 		//a.sumColumn(arr2);
-		a.sort(arr2);
+		//a.sort(arr2);
 	}
 }
