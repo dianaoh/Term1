@@ -3,56 +3,65 @@ package objects;
 import java.util.Scanner;
 
 public class BankAccountClass {
-	private int money;
-	private double interest;
+	private int balance;
+	private String name;
 	
-	private BankAccountClass(int money){
-		this.money= money;
+	public BankAccountClass(String name){
+		balance=0;
+		this.name = name;
+	}
+	
+	public BankAccountClass (int balance,String name) {
+		this.balance=balance;
+		this.name=name;
 	}
 	
 	public void deposit(int n) {
-		money+= n;
+		balance+= n;
 	}
 	
 	public void withdraw (int n) {
-		money-=n;
+		balance-=n;
 	}
 	
-	public void addInterest (double interest) {
-		this.interest= interest;
-		money*=(interest+1);
+	public int getBalance () {
+		return balance;
+	}
+	
+	public void setBalance (int balance) {
+		this.balance= balance;
 	}
 	
 	public void display() {
-		System.out.println("you have $"+money+" in your bank account");
+		System.out.println(name+"has $"+balance+" in their bank account");
 	}
 	
-	public int position(String []arr,String name) {
-		for (int i=0;i<arr.length;i++) {
-			if (arr[i].equals(name)) {
-				return i;
-			}
-		}
-		return -1;
-	}
+//	public int position(String []arr,String name) {
+//		for (int i=0;i<arr.length;i++) {
+//			if (arr[i].equals(name)) {
+//				return i;
+//			}
+//		}
+//		return -1;
+//	}
+//	
+//	public void askUser (String str) {
+//		Scanner scan = new Scanner (System.in);
+//		if (str.equals("deposit")) {
+//			money=scan.nextInt();
+//			deposit (money);
+//		}
+//		else if(str.equals("withdraw")){
+//			money=scan.nextInt();
+//			withdraw (money);
+//		}
+//		
+//		else if (str.equals ("display")) {
+//			display ();
+//		}
+//	}
 	
-	public void askUser (String str) {
-		Scanner scan = new Scanner (System.in);
-		if (str.equals("deposit")) {
-			money=scan.nextInt();
-			deposit (money);
-		}
-		else if(str.equals("withdraw")){
-			money=scan.nextInt();
-			withdraw (money);
-		}
-		
-		else if (str.equals ("display")) {
-			display ();
-		}
-	}
-	
-	public static void main(String[] args) {
+//	public static void main(String[] args) {
 		
 //		BankAccountClass a= new BankAccountClass (200);
 //		int accounts[]= {0,100,200,0,-100};
@@ -80,8 +89,5 @@ public class BankAccountClass {
 //		}
 		
 		
-		
-
-	}
 
 }
