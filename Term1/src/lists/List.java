@@ -3,10 +3,10 @@ package lists;
 import java.util.ArrayList;
 
 public class List {
-	public static int sum (ArrayList <Integer> nums) {
+	public static int sum (ArrayList<Double> nums) {
 		int count=0;
 		
-		for (int i:nums) {
+		for (Double i:nums) {
 			count+=i;
 		}
 //		for (int i=0;i<nums.size();i++) {
@@ -16,7 +16,7 @@ public class List {
 		return count;
 	}
 	
-	public static int average (ArrayList <Integer> nums) {
+	public static double average (ArrayList <Double> nums) {
 		return (sum (nums))/nums.size();
 	}
 	
